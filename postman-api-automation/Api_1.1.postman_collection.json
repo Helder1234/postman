@@ -1,0 +1,1945 @@
+{
+	"info": {
+		"_postman_id": "745a55a1-85b4-4ce0-b2ad-1ece746eb808",
+		"name": "Api_1.1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Monitorings",
+			"item": [
+				{
+					"name": "List of Monitorings",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "39689735-639a-4a1c-a082-7c616dfc04b5",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"let sha1 = CryptoJS.SHA1('sistema api ' + timesTamp).toString();",
+									"",
+									"let ass = timesTamp + \":\" + sha1;",
+									"",
+									"console.log(ass);",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "e6cd68a8-a2c1-4699-879f-6f61a83dddb1",
+								"exec": [
+									"let nameMonitoring = pm.variables.get('nameMonitoring')",
+									"",
+									"pm.test(\"Apresentou nome do Monitoramento: \" + nameMonitoring, function () {",
+									"    pm.expect(pm.response.text()).to.include(nameMonitoring);",
+									"    ",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}/1.1/monitorings?time={{timesTamp}}&publickey={{publicKey}}&signature={{signature}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"monitorings"
+							],
+							"query": [
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e1b3a651-c3bd-4c0c-9ba1-df18daa97a06",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1b763602-f6b6-4010-9aac-3a925ff96921",
+								"exec": [
+									"let userName = pm.variables.get('userName')",
+									"",
+									"pm.test(\"Apresentou user name: \" + userName, function () {",
+									"    pm.expect(pm.response.text()).to.include(userName);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}/1.1/logmentions/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"logmentions",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Monitoring Statistics",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3b2ba002-5cbe-4cdf-b827-6f7ff16f619d",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "df1a8518-3445-4bed-a4cf-3cec94f3ac6a",
+								"exec": [
+									"let idSearch = pm.variables.get('idSearch');",
+									"",
+									"pm.test(\"Apresentou ID Search: \" + idSearch, function () {",
+									"    pm.expect(pm.response.text()).to.include(idSearch);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}/1.1/monitoringstatistics/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&published_date={{published_date}}&ipp={{ipp}}&page={{page}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"monitoringstatistics",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "published_date",
+									"value": "{{published_date}}"
+								},
+								{
+									"key": "ipp",
+									"value": "{{ipp}}"
+								},
+								{
+									"key": "page",
+									"value": "{{page}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5cbf9ccb-9444-4bc3-818c-dc72afb9ed05",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1018d6c6-237d-4f64-8300-ca6e9026f675",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Searches",
+			"item": [
+				{
+					"name": "List of Searches",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bfb1c2df-3f89-4644-804b-77c4d22ff550",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "41d118f1-e4e5-4f78-bd00-f5e63d0a47a5",
+								"type": "text/javascript",
+								"exec": [
+									"let idBusca = pm.variables.get('idBusca')",
+									"",
+									"pm.test(\"Apresentou ID da Busca: \" + idBusca, function () {",
+									"    pm.expect(pm.response.text()).to.include(idBusca);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}/1.1/searches/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"searches",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tags",
+			"item": [
+				{
+					"name": "List of Tags",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "97369e9d-38c1-4f9c-b671-78ce04a6b679",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let type = pm.variables.get('type');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "39093369-fa5c-45bf-9aa2-3bb38acb6bf0",
+								"type": "text/javascript",
+								"exec": [
+									"var idTag = pm.variables.get('idTag')",
+									"",
+									"pm.test(\"Apresentou ID da Tag: \" + idTag, function () {",
+									"    pm.expect(pm.response.text()).to.include(idTag);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}/1.1/tags/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&type={{type}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"tags",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "type",
+									"value": "{{type}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Tag",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8bcba94d-2528-4bb2-8591-db163ceab5bf",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "417a5c47-920d-4bcf-9dcf-969a5d6e168e",
+								"type": "text/javascript",
+								"exec": [
+									"let tagToAdd = pm.variables.get('tagToAdd')",
+									"",
+									"pm.test(\"Apresentou a Tag: \" + tagToAdd, function () {",
+									"    pm.expect(pm.response.text()).to.include(tagToAdd);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url_base}}/1.1/tagmentions/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&mentions_ids={{idMention}}&tags_to_add={{tagToAdd}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"tagmentions",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "mentions_ids",
+									"value": "{{idMention}}"
+								},
+								{
+									"key": "tags_to_add",
+									"value": "{{tagToAdd}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Tag",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "efa5ad73-dffc-43d4-beb0-de3b71d8def8",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d7b1936-9cf7-430e-96a7-fdfdb8ddade5",
+								"type": "text/javascript",
+								"exec": [
+									"let tagToRemove = pm.variables.get('tagToAdd')",
+									"",
+									"pm.test(\"Apresentou a Tag: \" + tagToRemove, function () {",
+									"    pm.expect(pm.response.text()).to.include(tagToRemove);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url_base}}/1.1/tagmentions/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&mentions_ids={{idMention}}&tags_to_remove={{tagToRemove}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"tagmentions",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "mentions_ids",
+									"value": "{{idMention}}"
+								},
+								{
+									"key": "tags_to_remove",
+									"value": "{{tagToRemove}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Classify Sentiment of Mentions",
+			"item": [
+				{
+					"name": "Sentiment Positive",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7525d3da-6ae7-442a-9156-2defbec4b60e",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "676e90c3-27ca-4964-aa2b-8cf2e05e5281",
+								"type": "text/javascript",
+								"exec": [
+									"var data = pm.variables.get('data')",
+									"",
+									"pm.test(\"Apresentou valor Data: \" + data, function () {",
+									"    pm.expect(pm.response.text()).to.include(data);",
+									"});",
+									"",
+									"pm.test(\"Apresentou true\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url_base}}/1.1/sentiment/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&mentions={{idMentionSentiment}}&sentiment={{sentimentPositive}}\n",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"sentiment",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "mentions",
+									"value": "{{idMentionSentiment}}"
+								},
+								{
+									"key": "sentiment",
+									"value": "{{sentimentPositive}}\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sentiment Remove",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5f762456-dae9-4ab8-9c9e-a06148de1d64",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "bb621d2e-977d-483f-95cd-491d0c4b6951",
+								"type": "text/javascript",
+								"exec": [
+									"var data = pm.variables.get('data')",
+									"",
+									"pm.test(\"Apresentou valor Data: \" + data, function () {",
+									"    pm.expect(pm.response.text()).to.include(data);",
+									"});",
+									"",
+									"pm.test(\"Apresentou true\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url_base}}/1.1/sentiment/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&mentions={{idMentionSentiment}}&sentiment={{sentimentRemove}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"sentiment",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "mentions",
+									"value": "{{idMentionSentiment}}"
+								},
+								{
+									"key": "sentiment",
+									"value": "{{sentimentRemove}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sentiment Negative",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "aeb24cac-44de-405d-9635-6a837c4809b5",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf579f37-aed1-4e3b-8d6c-a614c297dc98",
+								"type": "text/javascript",
+								"exec": [
+									"var data = pm.variables.get('data')",
+									"",
+									"pm.test(\"Apresentou valor Data: \" + data, function () {",
+									"    pm.expect(pm.response.text()).to.include(data);",
+									"});",
+									"",
+									"pm.test(\"Apresentou true\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url_base}}/1.1/sentiment/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&mentions={{idMentionSentiment}}&sentiment={{sentimentNegative}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"sentiment",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "mentions",
+									"value": "{{idMentionSentiment}}"
+								},
+								{
+									"key": "sentiment",
+									"value": "{{sentimentNegative}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sentiment Neutrol",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "66b53a71-76cf-4e7b-a39f-cb07f4499f0b",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "39e6aedb-6b0e-474d-b9d9-2b3fcc0dea1a",
+								"type": "text/javascript",
+								"exec": [
+									"var data = pm.variables.get('data')",
+									"",
+									"pm.test(\"Apresentou valor Data: \" + data, function () {",
+									"    pm.expect(pm.response.text()).to.include(data);",
+									"});",
+									"",
+									"pm.test(\"Apresentou true\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url_base}}/1.1/sentiment/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&mentions={{idMentionSentiment}}&sentiment={{sentimentNeutral}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"sentiment",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "mentions",
+									"value": "{{idMentionSentiment}}"
+								},
+								{
+									"key": "sentiment",
+									"value": "{{sentimentNeutral}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sentiment Mixed",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8d6ca376-1784-41a7-942e-fc730863af06",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "57dc768f-945a-4e68-b7e4-4253c3aba472",
+								"type": "text/javascript",
+								"exec": [
+									"var data = pm.variables.get('data')",
+									"",
+									"pm.test(\"Apresentou valor Data: \" + data, function () {",
+									"    pm.expect(pm.response.text()).to.include(data);",
+									"});",
+									"",
+									"pm.test(\"Apresentou true\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url_base}}/1.1/sentiment/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&mentions={{idMentionSentiment}}&sentiment={{sentimentMixed}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"sentiment",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "mentions",
+									"value": "{{idMentionSentiment}}"
+								},
+								{
+									"key": "sentiment",
+									"value": "{{sentimentMixed}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cda811e2-29e7-4d3d-866e-2285de2334d5",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad4dd458-b875-4f1d-b887-c8773ab586f2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Tickets",
+			"item": [
+				{
+					"name": "List of  Tickets",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a51c3682-3081-46e9-be50-d0edaa1598f3",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "aeceefe4-cca7-48c5-a16f-e8b213521697",
+								"type": "text/javascript",
+								"exec": [
+									"var idTicket = pm.variables.get('idTicket')",
+									"var status = pm.variables.get('status')",
+									"",
+									"pm.test(\"Apresentou ID do Ticket: \" + idTicket, function () {",
+									"    pm.expect(pm.response.text()).to.include(idTicket);",
+									"});",
+									"",
+									"pm.test(\"Apresentou status: \" + status, function () {",
+									"    pm.expect(pm.response.text()).to.include(status);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}/1.1/tickets/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"tickets",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log of Tickets",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "12a273b4-e389-48c5-8243-3ba30953ad75",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "bd0110d6-7bbb-42c0-b9a2-593767365718",
+								"type": "text/javascript",
+								"exec": [
+									"var idTicket = pm.variables.get('idTicket')",
+									"",
+									"pm.test(\"Apresentou ID do Ticket: \" + idTicket, function () {",
+									"    pm.expect(pm.response.text()).to.include(idTicket);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}/1.1/logtickets/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"logtickets",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List of Users",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "f927f5c0-75fa-422a-8070-663b52a61009",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "a27d5e9f-d5ee-49ed-92f2-5758fa3165ed",
+								"type": "text/javascript",
+								"exec": [
+									"var numberMentions = pm.variables.get('numberMentions')",
+									"",
+									"pm.test(\"Apresentou Numero de Mencões: \" + numberMentions, function () {",
+									"    pm.expect(pm.response.text()).to.include(numberMentions);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}/1.1/users/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&social_network={{socialNetWork}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"users",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "social_network",
+									"value": "{{socialNetWork}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Post Facebook",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "2828f7b4-4330-4df9-a9f8-f95d0d938237",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"function randomText () {",
+									"    var letters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';",
+									"    var random = '';",
+									"",
+									"    for (var i = 0; i < letters.length; i++) {",
+									"      var rnum = Math.floor(Math.random() * letters.length);",
+									"      random += letters.substring(rnum, rnum + 1);",
+									"    }",
+									"    return random;",
+									"}",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									"pm.environment.set('randomText', randomText());",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "9529e9b1-5502-4c36-964b-0ab0c16148d8",
+								"exec": [
+									"pm.test(\"Deve Apresentar True\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}/1.1/post/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&account_id={{idAccount}}&message={{randomText}}&shared_url={{shared_url}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"post",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "account_id",
+									"value": "{{idAccount}}"
+								},
+								{
+									"key": "message",
+									"value": "{{randomText}}"
+								},
+								{
+									"key": "shared_url",
+									"value": "{{shared_url}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Twitter",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c8a4955c-dcbd-4ce5-893c-721812bed11f",
+								"exec": [
+									"// Para o teste dessa request funcionar o ambiente de QA terá que estar adicionando conta do Twitter, deverá somente inserir a variavel ID account twitter no ambiente de QA.",
+									"// Criar o script de teste, devido QA não está funcionando vou aguardar para criar o Teste para QA e Prod.",
+									"",
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"function randomText () {",
+									"    var letters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';",
+									"    var random = '';",
+									"",
+									"    for (var i = 0; i < letters.length; i++) {",
+									"      var rnum = Math.floor(Math.random() * letters.length);",
+									"      random += letters.substring(rnum, rnum + 1);",
+									"    }",
+									"    return random;",
+									"}",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									"pm.environment.set('randomText', randomText());",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}/1.1/post/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&account_id={{idAccountTwitter}}&message={{randomText}}&shared_url={{shared_url}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"post",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "account_id",
+									"value": "{{idAccountTwitter}}"
+								},
+								{
+									"key": "message",
+									"value": "{{randomText}}"
+								},
+								{
+									"key": "shared_url",
+									"value": "{{shared_url}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "93ef3969-cf73-47bf-929c-f245f4203c31",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "658e350c-1c10-4616-a072-975d057d1a41",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Mentions",
+			"item": [
+				{
+					"name": "List of Mentions",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "74b85fc4-a00c-40b1-be1b-df7c518e1d13",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "00a74731-8da9-4315-838d-6f8cade12799",
+								"exec": [
+									"let facebookName = pm.variables.get('facebookName');",
+									"",
+									"pm.test(\"Apresentou o Facebook Name: \" + facebookName, function () {",
+									"    pm.expect(pm.response.text()).to.include(facebookName);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}/1.1/mentions/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&searches_id={{idSearch}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"mentions",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "searches_id",
+									"value": "{{idSearch}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List of Replies Mention",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "51f2b277-4d17-47f3-831a-08af7c9e48f8",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "663a5c6e-10c5-4fbb-838a-fbc715ea8e49",
+								"type": "text/javascript",
+								"exec": [
+									"let idReplay = pm.variables.get('idReplay');",
+									"",
+									"pm.test(\"Apresentou ID Replay: \" + idReplay, function () {",
+									"    pm.expect(pm.response.text()).to.include(idReplay);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url_base}}/1.1/mentionreplies/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&mention_id={{idMention}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"mentionreplies",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "mention_id",
+									"value": "{{idMention}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Replay of Mention",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9ead58b1-a418-47e3-99d8-c8f43f9fa4b7",
+								"type": "text/javascript",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let privateKey = pm.variables.get('privateKey');",
+									"let timesTamp = new Date().getTime();",
+									"",
+									"let signature = CryptoJS.MD5(timesTamp + privateKey).toString();",
+									"",
+									"pm.environment.set('timesTamp', timesTamp);",
+									"pm.environment.set('signature', signature);",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d7ef0d84-1b2c-4dde-b909-3584cc4a5441",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Deve Apresentar True\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url_base}}/1.1/replymention/{{idMonitoring}}/?publickey={{publicKey}}&time={{timesTamp}}&signature={{signature}}&mention={{idMentionReplay}}&message={{randomText}}&account={{account}}",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"1.1",
+								"replymention",
+								"{{idMonitoring}}",
+								""
+							],
+							"query": [
+								{
+									"key": "publickey",
+									"value": "{{publicKey}}"
+								},
+								{
+									"key": "time",
+									"value": "{{timesTamp}}"
+								},
+								{
+									"key": "signature",
+									"value": "{{signature}}"
+								},
+								{
+									"key": "mention",
+									"value": "{{idMentionReplay}}"
+								},
+								{
+									"key": "message",
+									"value": "{{randomText}}"
+								},
+								{
+									"key": "account",
+									"value": "{{account}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Trial",
+			"item": [
+				{
+					"name": "Create account Trial",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bc071b74-fa88-4845-a5d3-c212b8f79923",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let timesTamp = new Date().getTime();",
+									"let sha1 = CryptoJS.SHA1('sistema api ' + timesTamp).toString();",
+									"let access = timesTamp + \":\" + sha1;",
+									"",
+									"pm.environment.set('access', access);",
+									"pm.environment.set('timesTamp', timesTamp);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "37b68339-fa22-4b44-b2b3-41e80930424e",
+								"exec": [
+									"pm.test(\"Deve Apresentar Status = true\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"true\");",
+									"});",
+									"",
+									"pm.test(\"Deve Apresentar message = Cadastro criado com sucesso\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Cadastro criado com sucesso\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_a",
+									"value": "{{access}}",
+									"type": "text"
+								},
+								{
+									"key": "_u",
+									"value": "{{_u}}",
+									"type": "text"
+								},
+								{
+									"key": "marketid",
+									"value": "{{marketid}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{email}}",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "{{name}}",
+									"type": "text"
+								},
+								{
+									"key": "company",
+									"value": "{{company}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "{{phone}}",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "{{country}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_base}}/sistemaapi/trialSignup",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"sistemaapi",
+								"trialSignup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check The User Plan",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d5b93900-8b7a-4500-9dba-d3a9a3e19fdf",
+								"exec": [
+									"var CryptoJS = require('crypto-js');",
+									"",
+									"let timesTamp = new Date().getTime();",
+									"let sha1 = CryptoJS.SHA1('sistema api ' + timesTamp).toString();",
+									"let access = timesTamp + \":\" + sha1;",
+									"",
+									"pm.environment.set('access', access);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "fb6b7e82-0288-4d54-9e0f-e7c126e3597c",
+								"exec": [
+									"pm.test(\"Deve Apresentar Type = Trial\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Trial\");",
+									"});",
+									"",
+									"pm.test(\"Deve Apresentar Status = 1\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"1\");",
+									"});",
+									"",
+									"pm.test(\"Deve Apresentar Plan = Trial\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Trial-Std\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_a",
+									"value": "{{access}}",
+									"type": "text"
+								},
+								{
+									"key": "_u",
+									"value": "{{_u}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{email}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_base}}/sistemaapi/verifyEmail",
+							"host": [
+								"{{url_base}}"
+							],
+							"path": [
+								"sistemaapi",
+								"verifyEmail"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c989cfcf-a810-43e6-ac24-4161ec4df30a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "17870751-0865-449b-a378-284ef36ad586",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
