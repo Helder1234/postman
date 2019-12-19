@@ -2,7 +2,7 @@ FROM ubuntu
 LABEL maintainer = Helder Mendes
 RUN apt-get update && apt-get upgrade
 RUN apt-get install -y git
-RUN git clone https://heldermendes1985:YVacKABrQavLS4wA4N72@bitbucket.org/scup/postman-api-automation.git/api
+RUN git clone "Repositorio"
 WORKDIR /api/
 RUN apt-get purge nodejs
 RUN apt-get install -y nodejs
