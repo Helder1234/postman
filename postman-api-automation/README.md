@@ -1,3 +1,48 @@
+Configurar ambiente para automação WEB
+Instalação e configuração, para executar testes de Web, utilizando WebDriverIO com Cucumber.
+
+Executar os seguintes passos:
+
+Instalar Java SE Development Kit 8 ou >
+
+    $ https://www.oracle.com/java/technologies/javase-jdk11-downloads.html
+Instalar NodeJS
+
+    $ https://nodejs.org/en/download/ 
+Instalar Wdio
+
+    $ npm i --save-dev @wdio/cli
+Clonar o projeto no Mac
+
+    $ git clone <url-do_repositorio-do-git>    
+Intalar as dependencias
+
+    $ npm install
+Para executar o projeto no Mac
+
+    Executa um scenario com ambiente especifico 
+    $ ENVIRONMENT=<environment> npm run local -- --spec features/<scenaro>.feature
+
+    Executa bateria de testes
+    $ npm run <environment>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Instalação
 
